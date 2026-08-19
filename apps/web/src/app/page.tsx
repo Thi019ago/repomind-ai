@@ -5,7 +5,13 @@ type HealthResponse = {
 
 export default async function Home() {
   try {
-    const response = await fetch('http://localhost:3001/health');
+    const apiUrl = process.env.API_URL;
+
+    if (!apiUrl) {
+      throw new Error('API_URL is not configured');
+    }
+
+    const response = await fetch(`${apiUrl}/health`);
 
     if (!response.ok) {
       throw new Error('API health check failed');
